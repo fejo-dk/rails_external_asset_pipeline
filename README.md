@@ -1,4 +1,4 @@
-# Use Rails with an external asset pipeline
+# Use Rails with an external asset pipeline [![Build Status](https://travis-ci.org/fejo-dk/rails_external_asset_pipeline.svg)](https://travis-ci.org/fejo-dk/rails_external_asset_pipeline)
 
 Instead of using the build-inn asset pipeline of Rails, some people want to use external asset pipelines – written in Node.js for example. This gem enables the required integration with Rails.
 
