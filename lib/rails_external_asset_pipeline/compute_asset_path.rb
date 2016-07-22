@@ -1,7 +1,3 @@
-require "rails_external_asset_pipeline/not_in_manifest_error"
-require "rails_external_asset_pipeline/missing_manifest_error"
-require "rails_external_asset_pipeline/invalid_manifest_error"
-
 module RailsExternalAssetPipeline
   module ComputeAssetPath
     TYPES_WITH_MANIFEST = %i(stylesheet image javascript)
@@ -14,7 +10,7 @@ module RailsExternalAssetPipeline
         source
       end
     rescue KeyError
-      raise NotInManifestError, "The asset '#{source}' of type '#{options[:type]}' was not in the manifest"
+      raise "The asset '#{source}' of type '#{options[:type]}' was not in the manifest"
     end
 
     private
@@ -22,13 +18,13 @@ module RailsExternalAssetPipeline
     def load_manifest_for(type)
       JSON.parse(foo(type))
     rescue JSON::ParserError
-      raise InvalidManifestError, "The manifest file 'public/assets/manifests/#{type}.json' is invalid JSON"
+      raise "The manifest file 'public/assets/manifests/#{type}.json' is invalid JSON"
     end
 
     def foo(type)
       File.read("#{Rails.root}/public/assets/manifests/#{type}.json")
     rescue Errno::ENOENT
-      raise MissingManifestError, "The manifest file 'public/assets/manifests/#{type}.json' is missing"
+      raise "The manifest file 'public/assets/manifests/#{type}.json' is missing"
     end
   end
 end
