@@ -1,6 +1,6 @@
 module RailsExternalAssetPipeline
   module ComputeAssetPath
-    TYPES_WITH_MANIFEST = %i(stylesheet image)
+    TYPES_WITH_MANIFEST = %i(stylesheet image javascript)
 
     def compute_asset_path(source, options = {})
       if TYPES_WITH_MANIFEST.include? options[:type]

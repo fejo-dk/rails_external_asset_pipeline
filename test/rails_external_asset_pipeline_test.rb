@@ -14,4 +14,11 @@ class RailsExternalAssetPipeline::Test < ActionDispatch::IntegrationTest
 
     assert_equal "/assets/stylesheets/application-12fcfd0548a6a948c16661f06d20046f.css", style_src
   end
+
+  def test_that_the_src_of_a_script_tag_is_set_correctly
+    get "/fancy/index"
+    script_src = css_select("script")[0]["src"]
+
+    assert_equal "/assets/javascripts/application-c311afba193992d26b32.js", script_src
+  end
 end
