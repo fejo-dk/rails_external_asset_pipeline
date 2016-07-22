@@ -1,5 +1,6 @@
 require "rails_external_asset_pipeline/not_in_manifest_error"
 require "rails_external_asset_pipeline/missing_manifest_error"
+require "rails_external_asset_pipeline/invalid_manifest_error"
 
 module RailsExternalAssetPipeline
   module ComputeAssetPath
@@ -19,7 +20,13 @@ module RailsExternalAssetPipeline
     private
 
     def load_manifest_for(type)
-      JSON.parse(File.read("#{Rails.root}/public/assets/manifests/#{type}.json"))
+      JSON.parse(foo(type))
+    rescue JSON::ParserError
+      raise InvalidManifestError, "The manifest file 'public/assets/manifests/#{type}.json' is invalid JSON"
+    end
+
+    def foo(type)
+      File.read("#{Rails.root}/public/assets/manifests/#{type}.json")
     rescue Errno::ENOENT
       raise MissingManifestError, "The manifest file 'public/assets/manifests/#{type}.json' is missing"
     end

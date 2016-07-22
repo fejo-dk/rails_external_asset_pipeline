@@ -45,6 +45,16 @@ class RailsExternalAssetPipeline::Test < ActionDispatch::IntegrationTest
     assert_equal err.message, "The manifest file 'public/assets/manifests/image.json' is missing", "Check for descriptive error message"
   end
 
+  def test_raises_an_error_when_manifest_is_invalid_json
+    use_assets_fixtures "assets_with_invalid_json"
+
+    err = assert_raises(ActionView::Template::Error) do
+      get "/fancy/index"
+    end
+
+    assert_equal err.message, "The manifest file 'public/assets/manifests/image.json' is invalid JSON", "Check for descriptive error message"
+  end
+
   def teardown
     FileUtils.remove_dir "test/dummy/public/assets"
   end
