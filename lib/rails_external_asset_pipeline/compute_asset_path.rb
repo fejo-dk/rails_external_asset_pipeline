@@ -1,4 +1,4 @@
-require 'rails_external_asset_pipeline/manifest'
+require "rails_external_asset_pipeline/manifest"
 
 module RailsExternalAssetPipeline
   module ComputeAssetPath

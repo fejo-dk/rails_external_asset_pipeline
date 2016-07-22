@@ -10,12 +10,14 @@ Gem::Specification.new do |spec|
   spec.authors = ["Lucas Dohmen"]
   spec.email = ["lucas.dohmen@innoq.com"]
 
-  spec.summary = %q{Use Rails with an external asset pipeline}
-  spec.description = %q{Instead of using the build-inn asset pipeline of Rails, some people want to use external asset pipelines – written in Node.js for example. This gem enables the required integration with Rails.}
+  spec.summary = %q(Use Rails with an external asset pipeline)
+  spec.description = %q(Instead of using the build-inn asset pipeline of Rails, some people want to use external asset pipelines – written in Node.js for example. This gem enables the required integration with Rails.)
   spec.homepage = "https://github.com/fejo-dk/rails_external_asset_pipeline"
   spec.license = "MIT"
 
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   spec.add_dependency "rails", "~> 5.0.0"
+
+  spec.add_development_dependency "rubocop", "~> 0.41.2"
 end

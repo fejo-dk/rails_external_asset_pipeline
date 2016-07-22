@@ -1,6 +1,6 @@
 # Use Rails with an external asset pipeline [![Build Status](https://travis-ci.org/fejo-dk/rails_external_asset_pipeline.svg)](https://travis-ci.org/fejo-dk/rails_external_asset_pipeline)
 
-Instead of using the build-inn asset pipeline of Rails, some people want to use external asset pipelines – written in Node.js for example. This gem enables the required integration with Rails.
+Instead of using the built-in asset pipeline of Rails, some people want to use external asset pipelines – written in Node.js for example. This gem enables the required integration with Rails.
 
 Why is an integration like that required? If your external asset pipeline modifies the names of the generated files depending on their content (for example by adding a hash of the file to the name), Rails will not be able to find the files on its own. You still want to be able to use the helpers you are used to like `stylesheet_link_tag` or `image_tag`, and they should put out the correct URL for the desired asset. This technique is referred to as *cache busting*.
 
