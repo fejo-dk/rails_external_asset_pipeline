@@ -1,3 +1,6 @@
+require "rails_external_asset_pipeline/not_in_manifest_error"
+require "rails_external_asset_pipeline/missing_manifest_error"
+
 module RailsExternalAssetPipeline
   module ComputeAssetPath
     TYPES_WITH_MANIFEST = %i(stylesheet image javascript)
@@ -9,6 +12,9 @@ module RailsExternalAssetPipeline
       else
         source
       end
+    rescue KeyError
+      raise NotInManifestError, "The asset '#{source}' of type '#{options[:type]}' was not in the manifest"
     end
   end
 end
+

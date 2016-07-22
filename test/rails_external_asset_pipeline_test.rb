@@ -21,4 +21,12 @@ class RailsExternalAssetPipeline::Test < ActionDispatch::IntegrationTest
 
     assert_equal "/assets/javascripts/application-c311afba193992d26b32.js", script_src
   end
+
+  def test_raises_an_error_when_an_asset_is_not_in_the_manifest
+    err = assert_raises(ActionView::Template::Error) do
+      get "/broken/index"
+    end
+
+    assert_equal err.message, "The asset 'missing.gif' of type 'image' was not in the manifest", "Check for descriptive error message"
+  end
 end
