@@ -25,7 +25,6 @@ The types supported by this gem are:
 * `stylesheet`
 * `javascript`
 * `image`
-* `font`
 
 You can find an example of using this gem in Rails 5 with an external Node.js pipeline [here](https://github.com/moonglum/rails-5-and-node-asset-pipeline).
 
