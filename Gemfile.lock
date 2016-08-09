@@ -126,6 +126,7 @@ PLATFORMS
 
 DEPENDENCIES
   rails_external_asset_pipeline!
+  rake (~> 11.2.2)
   rubocop (~> 0.41.2)
 
 BUNDLED WITH
