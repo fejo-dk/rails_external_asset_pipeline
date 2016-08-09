@@ -1,6 +1,7 @@
 module RailsExternalAssetPipeline
   class Manifest
-    def initialize(type)
+    def initialize(manifests_path, type)
+      @manifests_path = manifests_path
       @type = type
     end
 
@@ -15,21 +16,21 @@ module RailsExternalAssetPipeline
     def parsed_manifest
       JSON.parse(unparsed_manifest)
     rescue JSON::ParserError
-      raise "The manifest file '#{asset_path}' is invalid JSON"
+      raise "The manifest file '#{manifest_path}' is invalid JSON"
     end
 
     def unparsed_manifest
-      File.read(full_asset_path)
+      File.read(full_manifest_path)
     rescue Errno::ENOENT
-      raise "The manifest file '#{asset_path}' is missing"
+      raise "The manifest file '#{manifest_path}' is missing"
     end
 
-    def full_asset_path
-      File.join(Rails.root, asset_path)
+    def full_manifest_path
+      File.join(Rails.root, manifest_path)
     end
 
-    def asset_path
-      File.join("public", "assets", "manifests", "#{@type}.json")
+    def manifest_path
+      File.join(@manifests_path, "#{@type}.json")
     end
   end
 end

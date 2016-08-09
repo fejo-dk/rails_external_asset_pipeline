@@ -2,6 +2,10 @@ require "test_helper"
 require "fileutils"
 
 class RailsExternalAssetPipeline::Test < ActionDispatch::IntegrationTest
+  def setup
+    Dummy::Application.config.x.rails_external_asset_pipeline.manifests_path = nil
+  end
+
   def test_that_the_source_of_an_image_is_set_correctly
     use_assets_fixtures "good_assets"
     get "/fancy/index"
@@ -55,13 +59,27 @@ class RailsExternalAssetPipeline::Test < ActionDispatch::IntegrationTest
     assert_equal err.message, "The manifest file 'public/assets/manifests/image.json' is invalid JSON", "Check for descriptive error message"
   end
 
+  def test_configure_different_manifest_path
+    use_assets_fixtures "good_assets", asset_path: "test/dummy/public/myassets"
+    use_manifest_path File.join("public", "myassets", "manifests")
+
+    assert_nothing_raised do
+      get "/fancy/index"
+    end
+  end
+
   def teardown
-    FileUtils.remove_dir "test/dummy/public/assets"
+    FileUtils.remove_dir "test/dummy/public/assets", true
+    FileUtils.remove_dir "test/dummy/public/myassets", true
   end
 
   private
 
-  def use_assets_fixtures(name)
-    FileUtils.cp_r "test/fixtures/#{name}", "test/dummy/public/assets"
+  def use_assets_fixtures(name, asset_path: "test/dummy/public/assets")
+    FileUtils.cp_r "test/fixtures/#{name}", asset_path
+  end
+
+  def use_manifest_path(path)
+    Dummy::Application.config.x.rails_external_asset_pipeline.manifests_path = path
   end
 end

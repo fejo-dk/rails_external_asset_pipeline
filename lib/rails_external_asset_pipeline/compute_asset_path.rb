@@ -6,11 +6,16 @@ module RailsExternalAssetPipeline
 
     def compute_asset_path(source, options = {})
       if TYPES_WITH_MANIFEST.include? options[:type]
-        manifest = Manifest.new(options[:type])
+        manifest = Manifest.new(manifests_path, options[:type])
         manifest.fetch(source)
       else
         source
       end
+    end
+
+    def manifests_path
+      Rails.configuration.x.rails_external_asset_pipeline.manifests_path ||
+        File.join("public", "assets", "manifests")
     end
   end
 end

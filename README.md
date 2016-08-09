@@ -4,7 +4,7 @@ Instead of using the built-in asset pipeline of Rails, some people want to use e
 
 Why is an integration like that required? If your external asset pipeline modifies the names of the generated files depending on their content (for example by adding a hash of the file to the name), Rails will not be able to find the files on its own. You still want to be able to use the helpers you are used to like `stylesheet_link_tag` or `image_tag`, and they should put out the correct URL for the desired asset. This technique is referred to as *cache busting*.
 
-So let's say you have a JavaScript file called `application.js` (for example in `app/assets/javascripts`) and your external asset pipeline generates a file called `application-03118e77692b637cfc0f55bb27fef087.js` (for example in `public/assets/javascripts`) from that file. When you use `stylesheet_link_tag 'application'`, you expect that the resulting HTML points to the file containing the hash in its filename. To do that, your pipeline needs to generate manifest files for each type of asset. In this case, it needs to generate a file called `javascript.json` in `public/assets/manifests`. The file should look like this:
+So let's say you have a JavaScript file called `application.js` (for example in `app/assets/javascripts`) and your external asset pipeline generates a file called `application-03118e77692b637cfc0f55bb27fef087.js` (for example in `public/assets/javascripts`) from that file. When you use `stylesheet_link_tag 'application'`, you expect that the resulting HTML points to the file containing the hash in its filename. To do that, your pipeline needs to generate manifest files for each type of asset. In this case, it needs to generate a file called `javascript.json` in `public/assets/manifests` (to change this, see the Configuration section). The file should look like this:
 
 ```json
 {
@@ -47,6 +47,16 @@ Or install it yourself as:
 ```
 $ gem install rails_external_asset_pipeline
 ```
+
+## Configuration
+
+By default this gem assumes that your manifest files can be found in `public/assets/manifests`. You can change that with the following configuration:
+
+```ruby
+config.x.rails_external_asset_pipeline.manifests_path = File.join("my", "own", "manifests", "path")
+```
+
+The `manifests_path` is relative to your Rails Root.
 
 ## Development
 
